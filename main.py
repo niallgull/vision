@@ -131,7 +131,8 @@ zodiac_index = (year - 2020) % 12
 zodiac = zodiacs[zodiac_index]
 constellation = get_constellation(month, day)
 
-category = st.selectbox("운세 분야를 선택하세요 👇", list(fortune_data.keys()))
+category = st.radio("운세 분야를 선택하세요 👇", list(fortune_data.keys()))
+
 data = fortune_data[category]
 random.seed(f"{birth_date}-{date.today().isoformat()}-{category}")
 
