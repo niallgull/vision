@@ -120,7 +120,7 @@ def get_constellation(month, day):
     return "♑ 염소자리"
 
 # 앱 시작
-st.title("🔮 분야별 운세 + 추천 차/음료")
+st.title("🔮 오늘의 운세")
 
 birth_date = st.date_input("생년월일을 입력하세요", min_value=date(1900, 1, 1), max_value=date.today())
 
