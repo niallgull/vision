@@ -160,3 +160,34 @@ st.markdown(f"🍹 차/음료: **{drink}**")
 st.markdown(f"🎵 음악: **{music}**")
 st.markdown(f"💐 아이템: **{item}**")
 st.markdown(f"📍 장소: **{place}**")
+import streamlit as st
+# (이하 기존 코드 유지)
+
+# 배경 이미지 스타일 추가
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .stApp::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        z-index: -1;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
