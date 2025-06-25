@@ -1,10 +1,10 @@
 import streamlit as st
 from datetime import datetime, date
 import random
-st.markdown(
-    """
+
+# 👉 스타일 추가
+st.markdown("""
     <style>
-    /* 배경 이미지 및 블러 처리 */
     .stApp {
         background-image: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
         background-size: cover;
@@ -12,7 +12,6 @@ st.markdown(
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
-
     .stApp::before {
         content: "";
         position: fixed;
@@ -24,8 +23,6 @@ st.markdown(
         backdrop-filter: blur(5px);
         z-index: -1;
     }
-
-    /* 가운데 흰색 카드 스타일 */
     .main-block {
         background-color: rgba(255, 255, 255, 0.95);
         padding: 2rem;
@@ -35,17 +32,12 @@ st.markdown(
         margin: 3rem auto;
     }
     </style>
-    """,
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
 
-# 띠 목록
-zodiacs = [
-    "🐭 쥐", "🐮 소", "🐯 호랑이", "🐰 토끼", "🐲 용", "🐍 뱀",
-    "🐴 말", "🐑 양", "🐵 원숭이", "🐔 닭", "🐶 개", "🐷 돼지"
-]
+# 데이터 준비
+zodiacs = ["🐭 쥐", "🐮 소", "🐯 호랑이", "🐰 토끼", "🐲 용", "🐍 뱀",
+           "🐴 말", "🐑 양", "🐵 원숭이", "🐔 닭", "🐶 개", "🐷 돼지"]
 
-# 별자리 함수
 def get_constellation(month, day):
     signs = [
         ((1, 20), "♒ 물병자리"), ((2, 19), "♓ 물고기자리"), ((3, 21), "♈ 양자리"),
@@ -58,14 +50,7 @@ def get_constellation(month, day):
             return sign
     return "♑ 염소자리"
 
-# 운세 데이터
-base_items = {
-    "차/음료": ["녹차", "홍차", "아메리카노", "라떼", "자몽차", "레몬차", "유자차", "아이스티", "말차", "허브티"],
-    "음악": ["클래식", "재즈", "로파이", "발라드", "인디", "팝", "힙합", "EDM", "뉴에이지", "록"],
-    "아이템": ["책", "노트", "펜", "캔들", "손목시계", "지갑", "열쇠고리", "스티커", "헤어핀", "머그컵"],
-    "장소": ["카페", "공원", "도서관", "강변", "산책로", "서점", "전시회", "영화관", "베란다", "옥상"]
-}
-
+# 운세 데이터 예시
 fortune_data = {
     "전체 운세 🔮": {
         "messages": [
@@ -80,99 +65,36 @@ fortune_data = {
             "운이 당신 편이에요. 망설이지 마세요.",
             "작은 친절이 큰 행운을 부를 수 있어요.",
         ],
+        "colors": ["빨강", "파랑", "노랑", "초록", "보라", "검정", "하늘색"],
+        "numbers": list(range(1, 100)),
+        "items": {
+            "차/음료": ["캐모마일 티", "아이스 아메리카노", "유자차", "홍차", "딸기 스무디", "레몬워터"],
+            "음악": ["재즈", "클래식", "팝", "로파이", "힙합"],
+            "아이템": ["향초", "행운의 동전", "손수건", "메모장", "책갈피"],
+            "장소": ["공원", "서점", "카페", "강변", "도서관"]
+        }
     },
-    "연애 운세 💘": {
-        "messages": [
-            "오늘은 사랑이 가까이에 있어요. 눈을 크게 떠보세요!",
-            "오래된 인연이 다시 이어질 수 있는 날이에요.",
-            "솔직한 표현이 상대에게 큰 감동을 줄 수 있어요.",
-            "가벼운 대화에서 진심이 오갈 수 있어요.",
-            "첫인상이 좋은 날입니다. 스타일에 신경 써보세요.",
-            "감정 표현이 중요한 열쇠가 될 거예요.",
-            "상대방의 말을 경청하는 것이 포인트예요.",
-            "새로운 만남보다는 기존 관계에 집중해 보세요.",
-            "당신의 진심이 통할 가능성이 높아요.",
-            "짝사랑이 이루어질 수도 있는 행운의 날!",
-        ],
-    },
-    "금전 운세 💰": {
-        "messages": [
-            "작은 지출을 아끼면 큰 기쁨이 돌아옵니다.",
-            "투자보다 저축에 더 집중해야 하는 날이에요.",
-            "기대하지 않았던 수입이 생길 수 있어요.",
-            "금전 문제에선 신중한 판단이 중요해요.",
-            "지출 계획을 다시 점검해 보세요.",
-            "쓸데없는 소비를 줄이면 금전운이 좋아집니다.",
-            "중고 거래나 재활용이 돈을 아껴줄 거예요.",
-            "금전 관련 문서에 사인할 땐 두 번 확인하세요.",
-            "좋은 절약 아이디어가 떠오를 수 있는 날이에요.",
-            "작은 행운이 들어올 수 있는 날입니다.",
-        ],
-    },
-    "건강 운세 💪": {
-        "messages": [
-            "가벼운 운동이 기분 전환에 도움이 돼요.",
-            "몸의 작은 신호에 귀를 기울이세요.",
-            "스트레칭으로 컨디션을 회복해 보세요.",
-            "잠을 충분히 자면 좋은 하루가 될 거예요.",
-            "면역력 관리를 위한 식단을 신경 써보세요.",
-            "정신 건강도 챙겨야 할 때입니다.",
-            "명상이 당신에게 큰 힘이 될 수 있어요.",
-            "몸을 따뜻하게 해주는 음식이 좋습니다.",
-            "건강검진을 예약해보는 것도 좋겠어요.",
-            "햇빛을 쬐며 산책하면 활력이 생겨요.",
-        ],
-    },
-    "일/학업 운세 📚": {
-        "messages": [
-            "작은 성취가 큰 동기를 줄 수 있는 날입니다.",
-            "집중이 잘 되는 날이에요. 공부나 일에 몰입해 보세요.",
-            "새로운 아이디어가 떠오를 수 있어요.",
-            "계획한 일정을 지키는 것이 포인트입니다.",
-            "작은 실수도 꼼꼼히 체크해보세요.",
-            "협업보다는 혼자 작업이 더 효율적일 수 있어요.",
-            "메모가 도움이 되는 날입니다.",
-            "꾸준함이 좋은 결과를 가져올 거예요.",
-            "휴식도 일정에 포함시키는 것이 중요해요.",
-            "오늘의 노력은 곧 보상으로 돌아올 거예요.",
-        ],
-    },
-    "인간관계 운세 🧑‍🤝‍🧑": {
-        "messages": [
-            "친구와의 대화에서 힐링을 얻을 수 있어요.",
-            "갈등보다 이해에 집중하면 관계가 좋아집니다.",
-            "누군가의 조언이 큰 도움이 될 거예요.",
-            "오늘은 인맥 확장에 좋은 기회가 있습니다.",
-            "진심 어린 사과가 문제를 풀어줄 수 있어요.",
-            "가까운 사람일수록 배려가 필요합니다.",
-            "팀워크가 성패를 좌우하는 날입니다.",
-            "오랜 친구에게 연락해보는 것도 좋아요.",
-            "타인의 입장에서 생각해보면 갈등이 줄어들 거예요.",
-            "당신의 친절이 누군가의 하루를 밝게 할 거예요.",
-        ],
-    }
+    # 다른 분야들도 같은 구조로 추가 가능
 }
 
-# 각 분야에 공통 색상, 숫자, 추천 아이템 추가
-for cat in fortune_data.values():
-    cat["colors"] = ["빨강", "파랑", "노랑", "초록", "보라", "하늘색", "분홍", "검정", "흰색", "주황"]
-    cat["numbers"] = list(range(1, 46))
-    cat["items"] = base_items
-
-# 앱 시작
+# 앱 제목
 st.title("🔮 오늘의 운세")
 
+# 날짜 입력
 birth_date = st.date_input("생년월일을 입력하세요", min_value=date(1900, 1, 1), max_value=date.today())
+
+# 정보 계산
 year, month, day = birth_date.year, birth_date.month, birth_date.day
 zodiac_index = (year - 2020) % 12
 zodiac = zodiacs[zodiac_index]
 constellation = get_constellation(month, day)
 
-category = st.radio("운세 분야를 선택하세요 👇", list(fortune_data.keys()))
-
+# 분야 선택
+category = st.selectbox("운세 분야를 선택하세요 👇", list(fortune_data.keys()))
 data = fortune_data[category]
 random.seed(f"{birth_date}-{date.today().isoformat()}-{category}")
 
+# 운세 요소 추출
 fortune = random.choice(data["messages"])
 color = random.choice(data["colors"])
 number = random.choice(data["numbers"])
@@ -181,7 +103,9 @@ music = random.choice(data["items"]["음악"])
 item = random.choice(data["items"]["아이템"])
 place = random.choice(data["items"]["장소"])
 
-# 결과 출력
+# 결과 출력 (카드 안)
+st.markdown('<div class="main-block">', unsafe_allow_html=True)
+
 st.markdown(f"### 👤 생년월일: `{birth_date}`")
 st.markdown(f"**띠**: {zodiac}")
 st.markdown(f"**별자리**: {constellation}")
@@ -197,64 +121,5 @@ st.markdown(f"🍹 차/음료: **{drink}**")
 st.markdown(f"🎵 음악: **{music}**")
 st.markdown(f"💐 아이템: **{item}**")
 st.markdown(f"📍 장소: **{place}**")
-import streamlit as st
-# (이하 기존 코드 유지)
 
-# 배경 이미지 스타일 추가
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background-image: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-    .stApp::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(5px);
-        z-index: -1;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-with st.container():
-    st.markdown(
-        """
-        <div style="
-            background-color: rgba(255, 255, 255, 0.85);
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            ">
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.markdown(f"### 👤 생년월일: `{birth_date}`")
-    st.markdown(f"**띠**: {zodiac}")
-    st.markdown(f"**별자리**: {constellation}")
-
-    st.markdown(f"### 📌 {category}")
-    st.success(fortune)
-    st.markdown("---")
-    st.markdown(f"🎨 **오늘의 행운 색상:** `{color}`")
-    st.markdown(f"🔢 **행운의 숫자:** `{number}`")
-
-    st.markdown("### 🎁 추천 아이템")
-    st.markdown(f"🍹 차/음료: **{drink}**")
-    st.markdown(f"🎵 음악: **{music}**")
-    st.markdown(f"💐 아이템: **{item}**")
-    st.markdown(f"📍 장소: **{place}**")
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-
+st.markdown('</div>', unsafe_allow_html=True)
