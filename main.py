@@ -189,5 +189,35 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+with st.container():
+    st.markdown(
+        """
+        <div style="
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            ">
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(f"### 👤 생년월일: `{birth_date}`")
+    st.markdown(f"**띠**: {zodiac}")
+    st.markdown(f"**별자리**: {constellation}")
+
+    st.markdown(f"### 📌 {category}")
+    st.success(fortune)
+    st.markdown("---")
+    st.markdown(f"🎨 **오늘의 행운 색상:** `{color}`")
+    st.markdown(f"🔢 **행운의 숫자:** `{number}`")
+
+    st.markdown("### 🎁 추천 아이템")
+    st.markdown(f"🍹 차/음료: **{drink}**")
+    st.markdown(f"🎵 음악: **{music}**")
+    st.markdown(f"💐 아이템: **{item}**")
+    st.markdown(f"📍 장소: **{place}**")
+
+    st.markdown("</div>", unsafe_allow_html=True)
 
 
