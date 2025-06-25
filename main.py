@@ -1,6 +1,43 @@
 import streamlit as st
 from datetime import datetime, date
 import random
+st.markdown(
+    """
+    <style>
+    /* 배경 이미지 및 블러 처리 */
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .stApp::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        z-index: -1;
+    }
+
+    /* 가운데 흰색 카드 스타일 */
+    .main-block {
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+        max-width: 700px;
+        margin: 3rem auto;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # 띠 목록
 zodiacs = [
