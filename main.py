@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, date
 import random
 
 # 띠 정보
@@ -24,19 +24,23 @@ def get_constellation(month, day):
 # 운세 메시지 모음
 fortune_messages = [
     "오늘은 행운의 기운이 가득해요. 작은 도전을 해보세요!",
-    "조금은 조심스러운 하루. 중요한 결정은 잠시 미뤄보세요.",
-    "뜻밖의 좋은 소식이 찾아올 수도 있어요!",
-    "주변 사람들과의 대화가 중요한 날이에요.",
-    "오늘은 나 자신을 위해 시간을 써보세요.",
+    "조심은 미덕이에요. 오늘은 차분히 보내세요.",
+    "뜻밖의 기회가 찾아올 수 있어요!",
+    "주변 사람들과 좋은 대화가 생길 수 있는 날입니다.",
+    "스스로에게 집중해 보세요. 자기 관리에 좋은 하루입니다.",
 ]
 
 # 앱 UI
 st.title("🔮 생년월일 운세 앱")
 
-# 생년월일 입력
-birth_date = st.date_input("당신의 생년월일을 선택하세요")
+# 생년월일 입력 (1900년 ~ 오늘까지 가능)
+birth_date = st.date_input(
+    "당신의 생년월일을 선택하세요",
+    min_value=date(1900, 1, 1),
+    max_value=date.today()
+)
 
-# 생년 정보 추출
+# 날짜 정보 추출
 year = birth_date.year
 month = birth_date.month
 day = birth_date.day
@@ -48,8 +52,8 @@ zodiac = zodiacs[zodiac_index]
 # 별자리 계산
 constellation = get_constellation(month, day)
 
-# 운세 메시지 선택
-random.seed(str(birth_date) + datetime.today().strftime("%Y-%m-%d"))
+# 운세 메시지 고정되게 랜덤 생성 (매일 같은 결과)
+random.seed(str(birth_date) + date.today().isoformat())
 fortune = random.choice(fortune_messages)
 
 # 결과 출력
